@@ -31,7 +31,7 @@ public class CustomAuthenticationFailureHandler extends SimpleUrlAuthenticationF
         * 인증 실패시 다시 로그인 페이지로 리다이렉트 시킨다
         * 이때, 파라미터를 통해 예외발생사실과 예외원인 등을 함께 보내어 사용자 화면에서 처리할 수 있도록 한다
         * */
-        setDefaultFailureUrl("/login?error=true&exception"+errorMessage);
+        setDefaultFailureUrl("/login?error=true&exception="+errorMessage);
         super.onAuthenticationFailure(request, response, exception);
     }
 }
