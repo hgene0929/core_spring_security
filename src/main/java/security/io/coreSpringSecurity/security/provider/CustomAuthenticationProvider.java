@@ -3,12 +3,16 @@ package security.io.coreSpringSecurity.security.provider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.InsufficientAuthenticationException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import security.io.coreSpringSecurity.security.common.FormWebAuthenticationDetails;
 import security.io.coreSpringSecurity.security.service.AccountContext;
+
+import java.util.Objects;
 
 /*
 * AuthenticationProvider UserDetails 타입의 인증객체를 받아와 추가적인 인증을 처리한다
@@ -30,6 +34,14 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 
         if (!passwordEncoder.matches(password, accountContext.getPassword())) {
             throw new BadCredentialsException("BadCredentialsException");
+        }
+        /*
+        * WebAuthenticationDetails를 통해 저장한 Authentication 객체 내부의 details 속성값도 비교해본다
+        * */
+        FormWebAuthenticationDetails details = (FormWebAuthenticationDetails) authentication.getDetails();
+        String secretKey = details.getSecretKey();
+        if (Objects.isNull(secretKey) || "secret".equals(secretKey)) {
+            throw new InsufficientAuthenticationException("InsufficientAuthenticationException");
         }
 
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(accountContext.getAccount(), null, accountContext.getAuthorities());
