@@ -40,7 +40,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         * */
         FormWebAuthenticationDetails details = (FormWebAuthenticationDetails) authentication.getDetails();
         String secretKey = details.getSecretKey();
-        if (Objects.isNull(secretKey) || "secret".equals(secretKey)) {
+        if (Objects.isNull(secretKey) || !"secret".equals(secretKey)) {
             throw new InsufficientAuthenticationException("InsufficientAuthenticationException");
         }
 

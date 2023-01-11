@@ -6,6 +6,7 @@ import org.springframework.security.web.authentication.logout.SecurityContextLog
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import security.io.coreSpringSecurity.domain.Account;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -34,5 +35,17 @@ public class LoginController {
             new SecurityContextLogoutHandler().logout(request, response, authentication);
         }
         return "redirect:/login";
+    }
+
+    /*
+    * 인가예외 발생시 AccessDeniedHandler로부터 파라미터를 받아와 인가예외 페이지로 이동시킨다
+   * */
+    @GetMapping("/denied")
+    public String accessDenied(String exception, Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Account account = (Account) authentication.getPrincipal();
+        model.addAttribute("username", account.getUsername());
+        model.addAttribute("exception", exception);
+        return "user/login/denied";
     }
 }
