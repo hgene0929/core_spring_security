@@ -17,6 +17,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import security.io.coreSpringSecurity.security.filter.AjaxLoginProcessingFilter;
 import security.io.coreSpringSecurity.security.handler.CustomAccessDeniedHandler;
 import security.io.coreSpringSecurity.security.provider.CustomAuthenticationProvider;
 
@@ -77,6 +79,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .exceptionHandling()
                 .accessDeniedHandler(accessDeniedHandler())
                 .and()
+                .addFilterBefore(ajaxLoginProcessingFilter(), UsernamePasswordAuthenticationFilter.class)
                 .formLogin()
                 .loginPage("/login")
                 .loginProcessingUrl("/login_proc")
@@ -85,5 +88,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .successHandler(successHandler)
                 .failureHandler(failureHandler)
                 .permitAll();
+    }
+
+    @Bean
+    public AjaxLoginProcessingFilter ajaxLoginProcessingFilter() {
+        /*
+        * 커스텀한 Ajax 인증용 필터를 usernameauthenticationfilter 이전에 추가할 수 있도록 의존성 주입
+        * */
+        return new AjaxLoginProcessingFilter();
     }
 }
