@@ -8,7 +8,9 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import security.io.coreSpringSecurity.security.common.AjaxLoginAuthenticationEntryPoint;
 import security.io.coreSpringSecurity.security.filter.AjaxLoginProcessingFilter;
+import security.io.coreSpringSecurity.security.handler.AjaxAccessDeniedHandler;
 import security.io.coreSpringSecurity.security.handler.AjaxAuthenticationFailureHandler;
 import security.io.coreSpringSecurity.security.handler.AjaxAuthenticationSuccessHandler;
 import security.io.coreSpringSecurity.security.provider.AjaxAuthenticationProvider;
@@ -39,7 +41,10 @@ public class AjaxSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .anyRequest().authenticated()
                 .and()
-                .addFilterBefore(ajaxLoginProcessingFilter(), UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(ajaxLoginProcessingFilter(), UsernamePasswordAuthenticationFilter.class)
+                .exceptionHandling()
+                .authenticationEntryPoint(new AjaxLoginAuthenticationEntryPoint())
+                .accessDeniedHandler(new AjaxAccessDeniedHandler());
     }
 
     @Bean
