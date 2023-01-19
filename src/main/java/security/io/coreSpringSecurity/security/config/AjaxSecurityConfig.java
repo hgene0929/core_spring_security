@@ -9,6 +9,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import security.io.coreSpringSecurity.security.filter.AjaxLoginProcessingFilter;
+import security.io.coreSpringSecurity.security.handler.AjaxAuthenticationFailureHandler;
+import security.io.coreSpringSecurity.security.handler.AjaxAuthenticationSuccessHandler;
 import security.io.coreSpringSecurity.security.provider.AjaxAuthenticationProvider;
 
 /*
@@ -21,6 +23,8 @@ import security.io.coreSpringSecurity.security.provider.AjaxAuthenticationProvid
 public class AjaxSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final AjaxAuthenticationProvider ajaxAuthenticationProvider;
+    private final AjaxAuthenticationSuccessHandler ajaxAuthenticationSuccessHandler;
+    private final AjaxAuthenticationFailureHandler ajaxAuthenticationFailureHandler;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -45,6 +49,8 @@ public class AjaxSecurityConfig extends WebSecurityConfigurerAdapter {
          * */
         AjaxLoginProcessingFilter ajaxLoginProcessingFilter =  new AjaxLoginProcessingFilter();
         ajaxLoginProcessingFilter.setAuthenticationManager(authenticationManagerBean());
+        ajaxLoginProcessingFilter.setAuthenticationSuccessHandler(ajaxAuthenticationSuccessHandler);
+        ajaxLoginProcessingFilter.setAuthenticationFailureHandler(ajaxAuthenticationFailureHandler);
         return ajaxLoginProcessingFilter;
     }
 }
