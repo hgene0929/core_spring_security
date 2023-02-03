@@ -53,6 +53,9 @@ public class AjaxLoginProcessingFilter extends AbstractAuthenticationProcessingF
         return getAuthenticationManager().authenticate(ajaxAuthenticationToken);
     }
 
+    /*
+    * Ajax 인지 여부를 판별할 때 살펴보는 부분
+    * */
     private boolean isAjax(HttpServletRequest request) {
         if ("XMLHttpRequest".equals(request.getHeader("X-Requested-with"))) {
             return true;
