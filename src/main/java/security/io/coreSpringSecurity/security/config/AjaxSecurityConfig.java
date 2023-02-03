@@ -45,6 +45,20 @@ public class AjaxSecurityConfig extends WebSecurityConfigurerAdapter {
                 .exceptionHandling()
                 .authenticationEntryPoint(new AjaxLoginAuthenticationEntryPoint())
                 .accessDeniedHandler(new AjaxAccessDeniedHandler());
+
+        /*
+        * DSL 객체를 apply() 를 통해 적용
+        * */
+        customConfigurerAjax(http);
+    }
+
+    private void customConfigurerAjax(HttpSecurity http) throws Exception {
+        http
+                .apply(new AjaxLoginConfigure<>())
+                .setSuccessHandlerAjax(ajaxAuthenticationSuccessHandler)
+                .setFailureHandlerAjax(ajaxAuthenticationFailureHandler)
+                .setAuthenthicationManager(authenticationManagerBean())
+                .createLoginProcessingUrlMatcher("/api/login");
     }
 
     @Bean
