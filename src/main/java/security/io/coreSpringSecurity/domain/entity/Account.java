@@ -1,4 +1,4 @@
-package security.io.coreSpringSecurity.domain;
+package security.io.coreSpringSecurity.domain.entity;
 
 import lombok.Data;
 

@@ -2,7 +2,7 @@ package security.io.coreSpringSecurity.security.service;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
-import security.io.coreSpringSecurity.domain.Account;
+import security.io.coreSpringSecurity.domain.entity.Account;
 
 import java.util.Collection;
 

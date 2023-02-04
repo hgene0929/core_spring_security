@@ -3,7 +3,7 @@ package security.io.coreSpringSecurity.service.impl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import security.io.coreSpringSecurity.domain.Account;
+import security.io.coreSpringSecurity.domain.entity.Account;
 import security.io.coreSpringSecurity.repository.UserRepository;
 import security.io.coreSpringSecurity.service.UserService;
 
