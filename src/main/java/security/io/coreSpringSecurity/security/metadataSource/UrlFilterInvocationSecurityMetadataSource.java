@@ -4,6 +4,7 @@ import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.web.FilterInvocation;
 import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;
 import org.springframework.security.web.util.matcher.RequestMatcher;
+import security.io.coreSpringSecurity.service.SecurityResourceService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.*;
@@ -21,6 +22,11 @@ public class UrlFilterInvocationSecurityMetadataSource implements FilterInvocati
     * RequestMap : 접근URL 과 권한정보목록을 저장한 맵형태의 정보
     * */
     private LinkedHashMap<RequestMatcher, List<ConfigAttribute>> requestMap = new LinkedHashMap<>();
+    private SecurityResourceService securityResourceService;
+
+    public UrlFilterInvocationSecurityMetadataSource(SecurityResourceService securityResourceService) {
+        this.securityResourceService = securityResourceService;
+    }
 
     public UrlFilterInvocationSecurityMetadataSource(LinkedHashMap<RequestMatcher, List<ConfigAttribute>> resourcesMap) {
         this.requestMap = resourcesMap;
@@ -64,4 +70,19 @@ public class UrlFilterInvocationSecurityMetadataSource implements FilterInvocati
     public boolean supports(Class<?> clazz) {
         return FilterInvocation.class.isAssignableFrom(clazz);
     }
+
+    /*
+    * 인가처리 실시간 반영하기용 메서드
+    * */
+    /*public void reload() {
+        LinkedHashMap<RequestMatcher, List<ConfigAttribute>> reloadMap = securityResourceService.getResourceList();
+        Iterator<Map.Entry<RequestMatcher, List<ConfigAttribute>>> iterator = reloadMap.entrySet().iterator();
+
+        requestMap.clear();
+
+        while (iterator.hasNext()) {
+            Map.Entry<RequestMatcher, List<ConfigAttribute>> entry = iterator.next();
+            requestMap.put(entry.getKey(), entry.getValue());
+        }
+    }*/
 }
