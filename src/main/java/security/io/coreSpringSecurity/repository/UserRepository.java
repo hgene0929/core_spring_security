@@ -1,7 +1,7 @@
 package security.io.coreSpringSecurity.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import security.io.coreSpringSecurity.domain.Account;
+import security.io.coreSpringSecurity.domain.entity.Account;
 
 import java.util.Optional;
 

@@ -7,7 +7,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import security.io.coreSpringSecurity.domain.Account;
+import security.io.coreSpringSecurity.domain.entity.Account;
 import security.io.coreSpringSecurity.repository.UserRepository;
 
 import java.util.ArrayList;
