@@ -36,6 +36,7 @@ import security.io.coreSpringSecurity.security.filter.PermitAllFilter;
 import security.io.coreSpringSecurity.security.handler.CustomAccessDeniedHandler;
 import security.io.coreSpringSecurity.security.metadataSource.UrlFilterInvocationSecurityMetadataSource;
 import security.io.coreSpringSecurity.security.provider.CustomAuthenticationProvider;
+import security.io.coreSpringSecurity.security.voter.IpAddressVoter;
 import security.io.coreSpringSecurity.service.SecurityResourceService;
 
 import java.util.ArrayList;
@@ -148,6 +149,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private List<AccessDecisionVoter<?>> getAccessDecisionVoters() {
         List<AccessDecisionVoter<? extends  Object>> accessDecisionVoterList = new ArrayList<>();
+        accessDecisionVoterList.add(new IpAddressVoter(resourceService));
         accessDecisionVoterList.add(roleVoter());
         return accessDecisionVoterList;
     }

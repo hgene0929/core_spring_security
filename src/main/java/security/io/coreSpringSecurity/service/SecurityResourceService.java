@@ -4,11 +4,13 @@ import lombok.Setter;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.access.SecurityConfig;
 import org.springframework.security.web.util.matcher.RequestMatcher;
+import security.io.coreSpringSecurity.repository.AccessIpRepository;
 import security.io.coreSpringSecurity.repository.ResourceRepository;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /*
 * 데이터 계층으로부터 자원을 가져와 맵을 생성한다
@@ -16,6 +18,7 @@ import java.util.List;
 public class SecurityResourceService {
 
     private ResourceRepository resourceRepository;
+    private AccessIpRepository accessIpRepository;
 
     public SecurityResourceService(ResourceRepository resourceRepository) {
         this.resourceRepository = resourceRepository;
@@ -39,4 +42,11 @@ public class SecurityResourceService {
 
         return result;
     }*/
+
+    /*
+    * IpVoter에서 비교를 위해 DB에 저장된 승인가능한 Ip정보를 모두 가져온다
+    * */
+    public List<String> getAccessIpList() {
+        return accessIpRepository.findAll().stream().map(accessIp -> accessIp.getIpAddress()).collect(Collectors.toList());
+    }
 }
