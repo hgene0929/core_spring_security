@@ -13,6 +13,11 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
 
+    @Override
+    public void order() {
+        System.out.println("order");
+    }
+
     @Transactional
     @Override
     public void createUser(Account account) {

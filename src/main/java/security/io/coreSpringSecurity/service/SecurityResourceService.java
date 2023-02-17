@@ -24,7 +24,6 @@ public class SecurityResourceService {
         this.resourceRepository = resourceRepository;
     }
 
-
     /*public LinkedHashMap<RequestMatcher, List<ConfigAttribute>> getResourceList() {
         LinkedHashMap<RequestMatcher, List<ConfigAttribute>> result = new LinkedHashMap<>();
 
